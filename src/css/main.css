@@ -1,0 +1,11 @@
+.search-form {
+  display: inline-block;
+  margin-left: 50vw;
+  transform: translate(-50%);
+}
+
+.load-more {
+  margin-left: 50vw;
+  transform: translate(-50%);
+  display: none;
+}
