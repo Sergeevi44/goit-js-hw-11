@@ -1,0 +1,1 @@
+{"version":3,"sources":["main.css"],"names":[],"mappings":"AAAA,aACE,oBAGF,CAEA,wBAJE,gBAAiB,CACjB,yBAOF,CAJA,WAGE,YACF","file":"src.c983db7d.css","sourceRoot":"../src","sourcesContent":[".search-form {\n  display: inline-block;\n  margin-left: 50vw;\n  transform: translate(-50%);\n}\n\n.load-more {\n  margin-left: 50vw;\n  transform: translate(-50%);\n  display: none;\n}\n"]}
