@@ -1,5 +1,11 @@
+body {
+  padding: 0;
+  margin: 0;
+  width: 100vw;
+}
 .search-form {
   display: inline-block;
+  margin-top: 20px;
   margin-left: 50vw;
   transform: translate(-50%);
 }
@@ -8,4 +14,22 @@
   margin-left: 50vw;
   transform: translate(-50%);
   display: none;
+}
+
+.gallery {
+  margin-top: 20px;
+  width: 100%;
+  display: grid;
+  grid-template-columns: 24vw 24vw 24vw 24vw;
+  grid-gap: 1rem;
+}
+
+.photo-card {
+  background-color: cadetblue;
+  width: 24vw;
+}
+img {
+  max-width: 24vw;
+}
+.info {
 }
