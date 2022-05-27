@@ -2,7 +2,7 @@ import './css/main.css';
 import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
 import Notiflix from 'notiflix';
-import fetchApi from './js/fetch-api';
+import FetchApi from './js/fetch-api';
 import makeMarkupFromTemplate from './templates/gallery.hbs';
 
 const refs = {
@@ -10,15 +10,17 @@ const refs = {
   gallery: document.querySelector('.gallery'),
   loadMoreBtn: document.querySelector('.load-more'),
 };
+const fetchApi = new FetchApi();
+let query = '';
 
 refs.form.addEventListener('submit', onFormSubmit);
 refs.loadMoreBtn.addEventListener('click', onLoadBtnClick);
 
 async function onFormSubmit(evt) {
   evt.preventDefault();
-  const query = evt.currentTarget.elements.searchQuery.value;
+  query = evt.currentTarget.elements.searchQuery.value;
   try {
-    const data = await fetchApi(query);
+    const data = await fetchApi.fetchImages(query);
     const images = data.data.hits;
     console.log(images);
     if (images.length === 0) {
@@ -35,4 +37,8 @@ async function onFormSubmit(evt) {
   }
 }
 
-async function onLoadBtnClick() {}
+async function onLoadBtnClick() {
+  try {
+    const data = await fetchApi.fetchImages(query);
+  } catch (error) {}
+}
