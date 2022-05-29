@@ -2,21 +2,23 @@ import axios from 'axios';
 
 export default class FetchApi {
   constructor() {
-    this.searchQuery = 'cat';
+    this.searchQuery = '';
     this.page = 1;
-    this.total = 500;
+    this.total = 0;
+    this.totalHits = 0;
+    this.perPage = 40;
   }
 
   fetchImages() {
     const API_KEY = '27497064-4ae9b55936b7b9caff863013f';
-    const URL = `https://pixabay.com/api/?key=${API_KEY}&q=${this.searchQuery}&image_type=photo&orientation=horizontal&safesearch=true&per_page=40&page=${this.page}`;
+    const URL = `https://pixabay.com/api/?key=${API_KEY}&q=${this.searchQuery}&image_type=photo&orientation=horizontal&safesearch=true&per_page=${this.perPage}&page=${this.page}`;
 
     return fetch(URL)
       .then(r => r.json())
       .then(result => {
+        this.total += this.perPage;
         this.page += 1;
-        this.total -= 40;
-        return result.hits;
+        return result;
       });
   }
   get query() {

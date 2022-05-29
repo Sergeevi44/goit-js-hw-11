@@ -17,20 +17,35 @@ refs.loadMoreBtn.addEventListener('click', onLoadMoreBtnClick);
 
 function onFormSubmit(evt) {
   evt.preventDefault();
-
   fetchApi.query = evt.currentTarget.elements.searchQuery.value;
   fetchApi.resetPage();
   fetchApi.fetchImages().then(images => {
+    if (images.hits.length === 0) {
+      return Notiflix.Notify.warning(
+        'Sorry, there are no images matching your search query. Please try again.',
+      );
+    }
+    Notiflix.Notify.success(`Hooray! We found ${images.totalHits} images`);
+    fetchApi.totalHits = images.totalHits;
     clearGallery();
-    addGalleryMarkup(images);
+    addGalleryMarkup(images.hits);
   });
 }
 
 function onLoadMoreBtnClick() {
-  if (fetchApi.total <= 40) {
-    return Notiflix.Notify.info("We're sorry, but you've reached the end of search results.");
+  let remainder = fetchApi.totalHits - fetchApi.total;
+
+  if (remainder === 0) {
+    refs.loadMoreBtn.style.display = 'none';
+    return Notiflix.Notify.failure("We're sorry, but you've reached the end of search results.");
   }
-  fetchApi.fetchImages().then(addGalleryMarkup);
+
+  if (remainder < fetchApi.perPage) {
+    fetchApi.perPage = remainder;
+  }
+  fetchApi.fetchImages().then(images => {
+    addGalleryMarkup(images.hits);
+  });
 }
 
 function addGalleryMarkup(gallery) {
