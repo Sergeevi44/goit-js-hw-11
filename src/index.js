@@ -15,11 +15,12 @@ const fetchApi = new FetchApi();
 refs.form.addEventListener('submit', onFormSubmit);
 refs.loadMoreBtn.addEventListener('click', onLoadMoreBtnClick);
 
-function onFormSubmit(evt) {
+async function onFormSubmit(evt) {
   evt.preventDefault();
   fetchApi.query = evt.currentTarget.elements.searchQuery.value;
   fetchApi.resetPage();
-  fetchApi.fetchImages().then(images => {
+  try {
+    const images = await fetchApi.fetchImages();
     if (images.hits.length === 0) {
       return Notiflix.Notify.warning(
         'Sorry, there are no images matching your search query. Please try again.',
@@ -29,10 +30,13 @@ function onFormSubmit(evt) {
     fetchApi.totalHits = images.totalHits;
     clearGallery();
     addGalleryMarkup(images.hits);
-  });
+  } catch (error) {
+    Notiflix.Notify.failure('Something went wrong!');
+    console.log(error);
+  }
 }
 
-function onLoadMoreBtnClick() {
+async function onLoadMoreBtnClick() {
   let remainder = fetchApi.totalHits - fetchApi.total;
 
   if (remainder === 0) {
@@ -43,9 +47,13 @@ function onLoadMoreBtnClick() {
   if (remainder < fetchApi.perPage) {
     fetchApi.perPage = remainder;
   }
-  fetchApi.fetchImages().then(images => {
-    addGalleryMarkup(images.hits);
-  });
+  try {
+    const moreImages = await fetchApi.fetchImages();
+    addGalleryMarkup(moreImages.hits);
+  } catch (error) {
+    Notiflix.Notify.failure('Something went wrong!');
+    console.log(error);
+  }
 }
 
 function addGalleryMarkup(gallery) {

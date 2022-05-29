@@ -9,17 +9,15 @@ export default class FetchApi {
     this.perPage = 40;
   }
 
-  fetchImages() {
+  async fetchImages() {
     const API_KEY = '27497064-4ae9b55936b7b9caff863013f';
     const URL = `https://pixabay.com/api/?key=${API_KEY}&q=${this.searchQuery}&image_type=photo&orientation=horizontal&safesearch=true&per_page=${this.perPage}&page=${this.page}`;
 
-    return fetch(URL)
-      .then(r => r.json())
-      .then(result => {
-        this.total += this.perPage;
-        this.page += 1;
-        return result;
-      });
+    const response = await axios.get(URL);
+    const result = response.data;
+    this.total += this.perPage;
+    this.page += 1;
+    return result;
   }
   get query() {
     this.searchQuery;
