@@ -28,6 +28,6 @@ body {
   outline: 3px solid cadetblue;
   width: 20vw;
 }
-img {
+.small {
   max-width: 20vw;
 }

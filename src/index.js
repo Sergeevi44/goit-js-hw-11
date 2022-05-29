@@ -11,6 +11,8 @@ const refs = {
   loadMoreBtn: document.querySelector('.load-more'),
 };
 const fetchApi = new FetchApi();
+const gallery = new SimpleLightbox('.gallery a');
+console.log(gallery);
 
 refs.form.addEventListener('submit', onFormSubmit);
 refs.loadMoreBtn.addEventListener('click', onLoadMoreBtnClick);
@@ -34,6 +36,7 @@ async function onFormSubmit(evt) {
     Notiflix.Notify.failure('Something went wrong!');
     console.log(error);
   }
+  gallery.refresh();
 }
 
 async function onLoadMoreBtnClick() {
@@ -54,6 +57,7 @@ async function onLoadMoreBtnClick() {
     Notiflix.Notify.failure('Something went wrong!');
     console.log(error);
   }
+  gallery.refresh();
 }
 
 function addGalleryMarkup(gallery) {
