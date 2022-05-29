@@ -1,11 +1,12 @@
 {{#each this}}
   <div class='photo-card'>
-    {{!-- <a href='{{this.webformatURL}}'><img
-        src='{{this.largeImageURL}}'
+    <a href='{{this.largeImageURL}}'><img
+        class='small'
+        src='{{this.webformatURL}}'
         alt='{{this.tags}}'
         loading='lazy'
-      /></a> --}}
-    <img src='{{this.webformatURL}}' alt='{{this.tags}}' loading='lazy' />
+      /></a>
+    {{!-- <img src='{{this.webformatURL}}' alt='{{this.tags}}' loading='lazy' /> --}}
     <div class='info'>
       <p class='info-item'>
         <b>Likes:{{this.likes}}</b>
